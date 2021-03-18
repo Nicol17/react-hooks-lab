@@ -3,58 +3,29 @@ import axios from 'axios'
 
     const CityWeather = (props) => {
         const [userCity, setUserCity] = useState('')
+        const [temp, setTemp] = useState('')
 
 
         useEffect(() => {
             const getWeather = async () => {
                 const url = `https://api.openweathermap.org/data/2.5/weather?q=${props.cityName}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
                 const response = await axios.get(url)
-                setUserCity(response.data)
+                setTemp(response.data.main.temp)
+                setUserCity(response.data.name)
                 console.log(response.data)
             }
-            getWeather();
-
+                getWeather();
         }, [props.cityName])
 
 
         return(
-            <h1>{userCity.name}</h1>
+            <div><h1>{userCity}</h1>
+            <h2>{temp}&#176;</h2>
+            </div>
         )
 
     }
 
 
-
-//     }
-
-// class CityWeather extends Component {
-
-
-//     state = {}
-
-//     async componentDidMount(){
-//         this.getWeather();
-//     }
-
-//     componentDidUpdate(oldProps){
-//         if(oldProps.cityName !== this.props.cityName){
-//             this.getWeather();
-//         }
-//     }
-
-//     getWeather = async()=>{
-//         const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.props.cityName}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
-//         const resp = await axios.get(url);
-//         console.log(resp.data);
-//     }
-
-//     render(){
-//         const iconUrl = `http://openweathermap.org/img/w/${this.state.icon}.png`
-
-//         return(
-//             <h1>{this.props.cityName}</h1>
-//         )
-//     }
-// }
 
 export default CityWeather
